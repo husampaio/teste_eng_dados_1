@@ -1,0 +1,13 @@
+
+========================================================================== test session starts ===========================================================================
+platform linux -- Python 3.11.11, pytest-8.3.5, pluggy-1.5.0 -- /usr/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /home/hadoop/workspace
+plugins: typeguard-4.4.2, integration-mark-0.2.0
+collected 3 items                                                                                                                                                        
+
+testes.py::test_tratar_bronze PASSED                                                                                                                               [ 33%]
+testes.py::test_limpeza_telefone_formatos_errados PASSED                                                                                                           [ 66%]
+testes.py::test_limpeza_telefone_coluna_inexistente PASSED                                                                                                         [100%]
+
+=========================================================================== 3 passed in 11.55s ===========================================================================
