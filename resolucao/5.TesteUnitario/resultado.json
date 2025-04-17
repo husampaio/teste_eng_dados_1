@@ -1,0 +1,257 @@
+{
+    "success": false,
+    "results": [
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "cod_cliente"
+          },
+          "meta": {},
+          "id": "0b1148e2-5b06-4b89-ae44-e680ef0c4d0d"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_unique",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "cod_cliente"
+          },
+          "meta": {},
+          "id": "2569911d-83dd-4091-ba99-7d0521e7c17d"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "tp_pessoa"
+          },
+          "meta": {},
+          "id": "b20b8563-5438-45d7-9135-f2eb4354cb9a"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "nm_cliente"
+          },
+          "meta": {},
+          "id": "da3de138-e49b-4c4b-8427-9d3e0a3eb278"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": false,
+        "expectation_config": {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "num_telefone_cliente"
+          },
+          "meta": {},
+          "id": "0fa60f1c-a809-4996-8668-452636e5eee4"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 35,
+          "unexpected_percent": 8.816120906801007,
+          "partial_unexpected_list": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "partial_unexpected_counts": [
+            {
+              "value": null,
+              "count": 20
+            }
+          ]
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_between",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "dt_nascimento_cliente",
+            "min_value": "1910-01-01",
+            "max_value": "2007-04-22"
+          },
+          "meta": {},
+          "id": "2dab6f72-ed92-4d03-b66a-384ff6a94683"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      },
+      {
+        "success": true,
+        "expectation_config": {
+          "type": "expect_column_values_to_be_between",
+          "kwargs": {
+            "batch_id": "clientes_silver-my_dataframe_data_asset",
+            "column": "vl_renda",
+            "min_value": 0.0
+          },
+          "meta": {},
+          "id": "2395be61-fe3a-4153-ad46-a2032bf14419"
+        },
+        "result": {
+          "element_count": 397,
+          "unexpected_count": 0,
+          "unexpected_percent": 0.0,
+          "partial_unexpected_list": [],
+          "missing_count": 0,
+          "missing_percent": 0.0,
+          "unexpected_percent_total": 0.0,
+          "unexpected_percent_nonmissing": 0.0,
+          "partial_unexpected_counts": []
+        },
+        "meta": {},
+        "exception_info": {
+          "raised_exception": false,
+          "exception_traceback": null,
+          "exception_message": null
+        }
+      }
+    ],
+    "suite_name": "suite_store",
+    "suite_parameters": {},
+    "statistics": {
+      "evaluated_expectations": 7,
+      "successful_expectations": 6,
+      "unsuccessful_expectations": 1,
+      "success_percent": 85.71428571428571
+    },
+    "meta": {
+      "great_expectations_version": "1.4.0",
+      "batch_spec": {
+        "batch_data": "SparkDataFrame"
+      },
+      "batch_markers": {
+        "ge_load_time": "20250417T173735.201426Z"
+      },
+      "active_batch_definition": {
+        "datasource_name": "clientes_silver",
+        "data_connector_name": "fluent",
+        "data_asset_name": "my_dataframe_data_asset",
+        "batch_identifiers": {
+          "dataframe": "<DATAFRAME>"
+        }
+      },
+      "validation_id": "26922591-c46e-4d6c-95fd-f2a956ade2bc",
+      "checkpoint_id": null,
+      "run_id": {
+        "run_name": null,
+        "run_time": "2025-04-17T17:37:38.071690+00:00"
+      },
+      "validation_time": "2025-04-17T17:37:38.071690+00:00",
+      "batch_parameters": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "id": null
+  }
