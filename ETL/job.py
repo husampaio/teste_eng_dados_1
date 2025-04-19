@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from utils.utils import Utils
+from ETL.utils.functions import Utils
 from utils.constants import CLIENTS_SCHEMA, CLIENTS_COLUMNS
 import os
 
