@@ -1,0 +1,26 @@
+Os clientes que sofreram mais atualizações são:
+878 com 5 alterações
+479 com 5 alterações
+396 com 5 alterações
+855 com 4 alterações
+
+Com 3 alterações temos alguns clientes, são eles:
+663
+71
+980
+850
+503
+632
+502
+227
+620
+177
+464
+93
+516
+127
+925
+972
+
+
+A média de idade dos clientes é de 50 anos.
