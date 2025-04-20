@@ -1,10 +1,10 @@
 from pyspark.sql import SparkSession
-from ETL.utils.functions import Utils
+from utils.functions import Functions
 from utils.constants import CLIENTS_SCHEMA, CLIENTS_COLUMNS
 import os
 
 
-class TransformClients(Utils):
+class TransformClients(Functions):
     def __init__(self):
         os.environ["AWS_ACCESS_KEY_ID"] = "FAKEACCESSKEY"
         os.environ["AWS_SECRET_ACCESS_KEY"] = "FAKESECRETACCESSKEY"

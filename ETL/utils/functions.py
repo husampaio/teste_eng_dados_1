@@ -5,7 +5,7 @@ import pyspark.sql.functions as F
 
 
 @dataclass
-class Utils:
+class Functions:
     @staticmethod
     def cols_to_upper(df: DataFrame, cols: List[str]) -> DataFrame:
         """
