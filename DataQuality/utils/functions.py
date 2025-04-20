@@ -1,22 +1,31 @@
-from dataclasses import dataclass
+import logging
 from typing import List
 from pyspark.sql import DataFrame
 import pyspark.sql.functions as F
 
 try:
-    from utils.exceptions import NegativeValueError, NullValueError, UniqueError
+    from utils.exceptions import (
+        NegativeValueError,
+        NullValueError,
+        UniqueError,
+        OutdatedDatasetError,
+    )
 except ModuleNotFoundError:
     from DataQuality.utils.exceptions import (
         NegativeValueError,
         NullValueError,
         UniqueError,
+        OutdatedDatasetError,
     )  # SOLUTION TO RUN TESTS
 
 
-@dataclass
 class Functions:
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        logging.basicConfig(level=logging.INFO)
+
     @staticmethod
-    def check_null(df: DataFrame, cols: List[str]) -> DataFrame:
+    def check_null(df: DataFrame, cols: List[str]):
         """
         Check if the DataFrame has null values on specified columns
 
@@ -34,7 +43,7 @@ class Functions:
                 raise NullValueError(f"Column {col} has null values")
 
     @staticmethod
-    def check_negative(df: DataFrame, cols: List[str]) -> DataFrame:
+    def check_negative(df: DataFrame, cols: List[str]):
         """
         Check if the DataFrame has negative values on specified columns
 
@@ -52,7 +61,7 @@ class Functions:
                 raise NegativeValueError(f"Column {col} has negative values")
 
     @staticmethod
-    def check_unique(df: DataFrame, cols: List[str]) -> DataFrame:
+    def check_unique(df: DataFrame, cols: List[str]):
         """
         Check if the DataFrame has duplicated values on specified columns
 
@@ -69,3 +78,11 @@ class Functions:
             df_test = df_test.filter(F.col("qty") > F.lit(1))
             if not df_test.isEmpty():
                 raise UniqueError(f"Column {col} has duplicate values")
+
+    def check_process_date(self, df: DataFrame, process_date_col: str):
+        df_test = df.select(F.max(process_date_col).alias(process_date_col)).filter(
+            F.datediff(F.current_date(), F.to_date(F.col(process_date_col))) > 1
+        )
+
+        if not df_test.isEmpty():
+            raise OutdatedDatasetError(f"This dataset is outdated!")
