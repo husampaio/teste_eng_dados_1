@@ -80,6 +80,17 @@ class Functions:
                 raise UniqueError(f"Column {col} has duplicate values")
 
     def check_process_date(self, df: DataFrame, process_date_col: str):
+        """
+        Check if the DataFrame is outdated
+
+        Parameters:
+            df (DataFrame):
+                Spark DataFrame
+            cols (str):
+                Column name
+
+        :raises OutdatedDatasetError: if dataset is outdated
+        """
         df_test = df.select(F.max(process_date_col).alias(process_date_col)).filter(
             F.datediff(F.current_date(), F.to_date(F.col(process_date_col))) > 1
         )
