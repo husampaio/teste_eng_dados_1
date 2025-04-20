@@ -1,11 +1,11 @@
 from typing import List
 from pyspark.sql import SparkSession
-from utils.utils import Utils
+from utils.functions import Functions
 from pyspark.sql import DataFrame
 import logging
 
 
-class DataQuality(Utils):
+class DataQuality(Functions):
     def __init__(
         self,
         df_to_test: DataFrame,
