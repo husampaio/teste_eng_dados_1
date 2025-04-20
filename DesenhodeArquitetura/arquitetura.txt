@@ -1,0 +1,9 @@
+A arquitetura foi desenhada toda pensando na estrutura de cloud da AWS
+
+O servidor MySQL está dentro do RDS, usamos o Database Migration Service para realizar a coleta dos dados via CDC e armazenar na camada bronze.
+Quando o dado chega na bronze, uma lambda é triggada iniciando no glue um job Spark que evolui o dado até a camada silver, esse job renomeia as colunas conforme as boas práticas
+adotadas pela empresa. Após o dado chegar na camada silver, duas lambdas são triggadas, uma dá início ao crawler que vai atualizar a tabela no catálogo e outra
+iniciará um novo job Spark para evoluir até a camada gold e também realizará o catálogo dos dos dados no glue.
+
+Entende-se que a camada silver são dados curados preparados para reports analíticos e a camada gold dados cruzados e reports para consumo em dashboards da área de negócio, 
+por esse motivo a partir da camada silver o dado já é catalogado.
