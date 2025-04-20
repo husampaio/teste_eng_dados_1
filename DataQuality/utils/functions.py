@@ -2,11 +2,19 @@ from dataclasses import dataclass
 from typing import List
 from pyspark.sql import DataFrame
 import pyspark.sql.functions as F
-from exceptions.exceptions import NegativeValueError, NullValueError, UniqueError
+
+try:
+    from utils.exceptions import NegativeValueError, NullValueError, UniqueError
+except ModuleNotFoundError:
+    from DataQuality.utils.exceptions import (
+        NegativeValueError,
+        NullValueError,
+        UniqueError,
+    )  # SOLUTION TO RUN TESTS
 
 
 @dataclass
-class Utils:
+class Functions:
     @staticmethod
     def check_null(df: DataFrame, cols: List[str]) -> DataFrame:
         """
