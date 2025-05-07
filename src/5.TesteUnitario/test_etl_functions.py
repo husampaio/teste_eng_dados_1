@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../1.ETL')))
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
+from datetime import date
 from etl_functions import *
 
 # Função para utilização do Spark nos testes
@@ -12,21 +13,22 @@ from etl_functions import *
 def spark():
     return SparkSession.builder.master("local").appName("test_etl_functions").getOrCreate()
 
-# Função para DataFrame de testes
-@pytest.fixture
-def df_sample(spark):
-    data = [(1, "João", "sp", "2022-05-10", "(95)39194-2483"), 
-            (2, "Maria", "rj", "2023-04-04", "(42)71167-9960"), 
-            (3, "José", "mg", "2024-01-01", "001-595-499-9546x079"),
-            (3, "José", "mg", "2025-02-06", None)]
-    
-    schema = StructType([
+#schema de testes
+schema = StructType([
         StructField("id_cliente", IntegerType(), False),
         StructField("nm_cliente", StringType(), False),
         StructField("estado", StringType(), False),
         StructField("dt_atualizacao", DateType(), False),
         StructField("telefone", StringType(), True)
     ])
+
+# Função para DataFrame de testes
+@pytest.fixture
+def df_sample(spark):
+    data = [(1, "João", "sp", date(2022, 5, 10), "(95)39194-2483"), 
+            (2, "Maria", "rj", date(2023, 4, 4), "(42)71167-9960"), 
+            (3, "José", "mg", date(2024, 1, 1), "001-595-499-9546x079"),
+            (3, "José", "mg", date(2025, 2, 6), None)]
     
     return spark.createDataFrame(data, schema)
 
@@ -38,11 +40,11 @@ def test_columns_to_uppercase(df_sample):
     assert first_row[1] == "SP"
 
 def test_columns_to_uppercase_wrong_column(df_sample):
-    df_sample = columns_to_uppercase(df_sample, ["cidade"])
-    assert "cidade" not in df_sample.columns
+    with pytest.raises(Exception):
+        columns_to_uppercase(df_sample, ["cidade"])
 
 def test_columns_to_uppercase_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([]))
+    df_sample = spark.createDataFrame([], schema)
     assert columns_to_uppercase(df_sample, ["nm_cliente"]).count() == 0
 
 # Testes da função rename_columns
@@ -55,7 +57,7 @@ def test_rename_columns_invalid_column(df_sample):
     assert "estado_cliente" not in df_sample.columns
 
 def test_rename_columns_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([]))
+    df_sample = spark.createDataFrame([], schema)
     assert rename_columns(df_sample, {"estado": "estado_cliente"}).count() == 0
 
 # Testes da função silver_deduplicate_rows
@@ -64,41 +66,35 @@ def test_silver_deduplicate_rows(df_sample):
     assert df_sample.count() == 3
 
 def test_silver_deduplicate_rows_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([]))
+    df_sample = spark.createDataFrame([], schema)
     assert silver_deduplicate_rows(df_sample, ["id_cliente"], ["dt_atualizacao"]).count() == 0
 
 def test_silver_deduplicate_rows_invalid_partition(df_sample):
     with pytest.raises(Exception):
-        silver_deduplicate_rows(df_sample, ["telefone"], ["dt_atualizacao"])
+        silver_deduplicate_rows(df_sample, ["coluna_invalida"], "coluna_invalida")
 
-#Testes da função format_phone
+
+# Testes da função format_phone
 def test_format_phone(df_sample):
     df_sample = format_phone(df_sample, "telefone", r"\(\d{2}\)\d{5}-\d{4}")
     first_row = df_sample.select("telefone").collect()
     assert first_row[0][0] == "(95)39194-2483"
-    assert first_row[2][0] == None
+    assert first_row[2][0] is None
 
 def test_format_phone_invalid_column(df_sample):
     with pytest.raises(Exception):
         format_phone(df_sample, "fax_number", r"\(\d{2}\)\d{5}-\d{4}")
 
 def test_format_phone_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([StructField("telefone", StringType(), True)]))
+    df_sample = spark.createDataFrame([], schema)
     assert format_phone(df_sample, "telefone", r"\(\d{2}\)\d{5}-\d{4}").count() == 0
 
 # Testes da função read_csv
 def test_read_csv(spark):
     path = "s3://bucket-test/csv_sample.csv"
     sep = ","
-    schema = StructType([
-        StructField("id_cliente", IntegerType(), False),
-        StructField("nm_cliente", StringType(), False),
-        StructField("estado", StringType(), False),
-        StructField("dt_atualizacao", DateType(), False),
-        StructField("telefone", StringType(), True)
-    ])
     
-    df_sample = read_csv(path, sep, schema)
+    df_sample = spark.read_csv(path, sep, schema)
     
     assert df_sample.schema == schema
     assert df_sample is not None
@@ -123,20 +119,20 @@ def test_write_parquet(df_sample):
     assert output_path is not None  
 
 def test_write_parquet_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([]))
+    df_sample = spark.createDataFrame([], schema)
     with pytest.raises(Exception):
         write_parquet(df_sample, "s3://bucket-test/", mode="append", partition_column="dt_atualizacao")
 
 def test_write_parquet_invalid_path(df_sample):
     with pytest.raises(Exception):
-        write_parquet(df_sample, "s3://wrong-bucket/csv_sample.csv", mode="append", partition_column="dt_atualizacao")
+        write_parquet(df_sample, "path_incorreto", mode="append", partition_column="dt_atualizacao")
 
 # Testes da função write_glue_parquet
 def test_write_glue_parquet(df_sample):
     assert write_glue_parquet(df_sample, None, "s3://bucket-test/", ["dt_atualizacao"], "test_ctx") is None
 
 def test_write_glue_parquet_empty_df(spark):
-    df_sample = spark.createDataFrame([], StructType([]))
+    df_sample = spark.createDataFrame([], schema)
     assert write_glue_parquet(df_sample, None, "s3://bucket-test/", ["dt_atualizacao"], "test_ctx") is None
 
 def test_write_glue_parquet_invalid_s3_path(df_sample):
