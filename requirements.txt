@@ -1,0 +1,5 @@
+pyspark==3.5.0
+pytest==8.1.1
+loguru==0.7.2
+boto3==1.34.0
+awsglue==3.0.0

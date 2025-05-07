@@ -1,0 +1,11 @@
+A arquitetura desenvolvida visa suportar todos os aspectos básicos para o bom funcionamento dos processos de movimentação dos dados do MySQL, 
+levando em consideração os aspectos fundamentais de segurança, disponibilidade, escalabilidade e performance 
+a partir dos serviços disponibilizados pela AWS.
+
+Serviços selecionados:
+ - IAM : Para controle de acesso a nível de usuário.
+ - CloudWatch : Para monitoramento dos processos e serviços.
+ - DMS : Para o processo de CDC(Captura das alterações dos dados e envio para os buckets).
+ - S3 : Para armazenamento dos dados.
+ - Step Functions : Para orquestrações dos jobs.
+ - Glue : Para os processos de ETL, ELT e gestão dos dados/tabelas via catálogo.
