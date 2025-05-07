@@ -1,0 +1,2 @@
+Para rodar os testes, execute o comando abaixo:
+pytest -v test_etl_functions.py
