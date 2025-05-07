@@ -1,0 +1,2 @@
+Para rodar os testes, execute o comando abaixo dentro do diretorio com o arquivo test_etl_functions.py:
+Comando: pytest -v test_etl_functions.py
